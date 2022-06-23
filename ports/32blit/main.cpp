@@ -12,6 +12,8 @@ extern "C" {
 #include "shared/runtime/pyexec.h"
 }
 
+#include "32blit.hpp"
+
 // Allocate memory for the MicroPython GC heap.
 static char heap[4096];
 
@@ -48,6 +50,8 @@ void update(uint32_t time) {
 }
 
 void render(uint32_t time) {
+    blit::screen.pen = {0, 0, 0, 255};
+    blit::screen.clear();
 }
 
 // Handle uncaught exceptions (should never be reached in a correct C implementation).
