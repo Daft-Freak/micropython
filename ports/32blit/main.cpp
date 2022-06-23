@@ -1,3 +1,4 @@
+extern "C" {
 #include "py/builtin.h"
 #include "py/compile.h"
 #include "py/gc.h"
@@ -5,11 +6,12 @@
 #include "py/stackctrl.h"
 #include "shared/runtime/gchelper.h"
 #include "shared/runtime/pyexec.h"
+}
 
 // Allocate memory for the MicroPython GC heap.
 static char heap[4096];
 
-int main(int argc, char **argv) {
+void init() {
     // Initialise the MicroPython runtime.
     mp_stack_ctrl_init();
     gc_init(heap, heap + sizeof(heap));
@@ -21,7 +23,12 @@ int main(int argc, char **argv) {
     // Deinitialise the runtime.
     gc_sweep_all();
     mp_deinit();
-    return 0;
+}
+
+void update(uint32_t time) {
+}
+
+void render(uint32_t time) {
 }
 
 // Handle uncaught exceptions (should never be reached in a correct C implementation).

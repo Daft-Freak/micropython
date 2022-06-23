@@ -21,7 +21,9 @@ project(${MICROPY_TARGET})
 
 include(${MICROPY_DIR}/py/usermod.cmake)
 
-add_executable(${MICROPY_TARGET})
+find_package(32BLIT CONFIG REQUIRED PATHS ../../../32blit-sdk)
+
+
 
 set(MICROPY_SOURCE_LIB
     ${MICROPY_DIR}/shared/readline/readline.c
@@ -31,7 +33,7 @@ set(MICROPY_SOURCE_LIB
 )
 
 set(MICROPY_SOURCE_PORT
-    main.c
+    main.cpp
     mphalport.c
 )
 
@@ -39,11 +41,13 @@ set(MICROPY_SOURCE_QSTR
     ${MICROPY_SOURCE_PY}
 )
 
-target_sources(${MICROPY_TARGET} PRIVATE
+blit_executable(${MICROPY_TARGET}
     ${MICROPY_SOURCE_PY}
     ${MICROPY_SOURCE_LIB}
     ${MICROPY_SOURCE_PORT}
 )
+
+blit_metadata(${MICROPY_TARGET} metadata.yml)
 
 target_link_libraries(${MICROPY_TARGET} usermod m)
 

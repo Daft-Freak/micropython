@@ -1,0 +1,10 @@
+title: MicroPython
+description: game description
+author: you
+splash:
+  file: assets/no-image.png
+icon:
+  file: assets/no-icon.png
+version: v0.0.1
+category: engine
+#url: https://github.com/
