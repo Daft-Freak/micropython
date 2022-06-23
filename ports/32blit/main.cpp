@@ -1,8 +1,12 @@
+#include <cstdlib>
+#include <unistd.h>
+
 extern "C" {
 #include "py/builtin.h"
 #include "py/compile.h"
 #include "py/gc.h"
 #include "py/mperrno.h"
+#include "py/mphal.h"
 #include "py/stackctrl.h"
 #include "shared/runtime/gchelper.h"
 #include "shared/runtime/pyexec.h"
@@ -17,15 +21,30 @@ void init() {
     gc_init(heap, heap + sizeof(heap));
     mp_init();
 
-    // Start a normal REPL; will exit when ctrl-D is entered on a blank line.
-    pyexec_friendly_repl();
-
-    // Deinitialise the runtime.
-    gc_sweep_all();
-    mp_deinit();
+    pyexec_event_repl_init();
 }
 
 void update(uint32_t time) {
+    // messy stdin polling
+    // TODO: don't do this
+    struct timeval tv = {};
+
+    fd_set fds;
+    FD_ZERO(&fds);
+    FD_SET(STDIN_FILENO, &fds);
+
+    while(true) {
+        select(STDIN_FILENO + 1, &fds, NULL, NULL, &tv);
+
+        if(FD_ISSET(0, &fds)) {
+            int c = mp_hal_stdin_rx_chr();
+            if (pyexec_event_repl_process_char(c)) {
+                exit(0);
+            }
+        }
+        else
+            break;
+    }
 }
 
 void render(uint32_t time) {

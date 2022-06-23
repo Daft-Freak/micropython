@@ -6,6 +6,8 @@
 #define MICROPY_ERROR_REPORTING                 (MICROPY_ERROR_REPORTING_TERSE)
 #define MICROPY_FLOAT_IMPL                      (MICROPY_FLOAT_IMPL_FLOAT)
 
+#define MICROPY_REPL_EVENT_DRIVEN               (1)
+
 // Enable u-modules to be imported with their standard name, like sys.
 #define MICROPY_MODULE_WEAK_LINKS               (1)
 
@@ -17,6 +19,7 @@
 #define MICROPY_PY_MATH                         (0)
 #define MICROPY_PY_IO                           (0)
 #define MICROPY_PY_STRUCT                       (0)
+
 
 // Type definitions for the specific machine.
 
