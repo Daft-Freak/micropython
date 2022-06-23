@@ -13,9 +13,19 @@ extern "C" {
 }
 
 #include "32blit.hpp"
+#include "engine/api_private.hpp"
 
 // Allocate memory for the MicroPython GC heap.
 static char heap[4096];
+
+// callback from CDC code
+static void on_recv(const uint8_t *data, uint16_t len) {
+    for(auto i = 0u; i < len; i++) {
+        if (pyexec_event_repl_process_char(char(data[i]))) {
+            exit(0);
+        }
+    }
+}
 
 void init() {
     // Initialise the MicroPython runtime.
@@ -24,6 +34,8 @@ void init() {
     mp_init();
 
     pyexec_event_repl_init();
+
+    blit::api.cdc_received = on_recv;
 }
 
 void update(uint32_t time) {

@@ -34,7 +34,7 @@ set(MICROPY_SOURCE_LIB
 
 set(MICROPY_SOURCE_PORT
     main.cpp
-    mphalport.c
+    mphalport.cpp
 )
 
 set(MICROPY_SOURCE_QSTR
