@@ -27,6 +27,7 @@ void init() {
 }
 
 void update(uint32_t time) {
+#ifndef TARGET_32BLIT_HW
     // messy stdin polling
     // TODO: don't do this
     struct timeval tv = {};
@@ -47,6 +48,7 @@ void update(uint32_t time) {
         else
             break;
     }
+#endif
 }
 
 void render(uint32_t time) {
