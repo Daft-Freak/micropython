@@ -71,9 +71,6 @@ void update(uint32_t time) {
 }
 
 void render(uint32_t time) {
-    blit::screen.pen = {0, 0, 0, 255};
-    blit::screen.clear();
-
     if(MP_STATE_PORT(render_callback_obj))
         mp_call_function_1(MP_STATE_PORT(render_callback_obj), mp_obj_new_int(time));
 }

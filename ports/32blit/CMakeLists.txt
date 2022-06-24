@@ -34,6 +34,7 @@ set(MICROPY_SOURCE_PORT
     main.cpp
     mphalport.cpp
     mod32blit.c
+    mod32blit.cpp
 )
 
 set(MICROPY_SOURCE_QSTR
