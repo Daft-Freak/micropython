@@ -33,12 +33,19 @@ void init() {
     gc_init(heap, heap + sizeof(heap));
     mp_init();
 
+    MP_STATE_PORT(render_callback_obj) = nullptr;
+    MP_STATE_PORT(update_callback_obj) = nullptr;
+
     pyexec_event_repl_init();
 
     blit::api.cdc_received = on_recv;
 }
 
 void update(uint32_t time) {
+
+    if(MP_STATE_PORT(update_callback_obj))
+        mp_call_function_1(MP_STATE_PORT(update_callback_obj), mp_obj_new_int(time));
+
 #ifndef TARGET_32BLIT_HW
     // messy stdin polling
     // TODO: don't do this
@@ -66,6 +73,9 @@ void update(uint32_t time) {
 void render(uint32_t time) {
     blit::screen.pen = {0, 0, 0, 255};
     blit::screen.clear();
+
+    if(MP_STATE_PORT(render_callback_obj))
+        mp_call_function_1(MP_STATE_PORT(render_callback_obj), mp_obj_new_int(time));
 }
 
 // Handle uncaught exceptions (should never be reached in a correct C implementation).

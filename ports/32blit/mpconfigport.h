@@ -37,4 +37,6 @@ typedef long mp_off_t;
 #define MP_STATE_PORT MP_STATE_VM
 
 #define MICROPY_PORT_ROOT_POINTERS \
-    const char *readline_hist[8];
+    const char *readline_hist[8]; \
+    mp_obj_t render_callback_obj; \
+    mp_obj_t update_callback_obj;

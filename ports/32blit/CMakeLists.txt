@@ -23,8 +23,6 @@ include(${MICROPY_DIR}/py/usermod.cmake)
 
 find_package(32BLIT CONFIG REQUIRED PATHS ../../../32blit-sdk)
 
-
-
 set(MICROPY_SOURCE_LIB
     ${MICROPY_DIR}/shared/readline/readline.c
     ${MICROPY_DIR}/shared/runtime/gchelper_generic.c
@@ -35,10 +33,12 @@ set(MICROPY_SOURCE_LIB
 set(MICROPY_SOURCE_PORT
     main.cpp
     mphalport.cpp
+    mod32blit.c
 )
 
 set(MICROPY_SOURCE_QSTR
     ${MICROPY_SOURCE_PY}
+    ${PROJECT_SOURCE_DIR}/mod32blit.c
 )
 
 blit_executable(${MICROPY_TARGET}
