@@ -1,22 +1,6 @@
 #include "mod32blit.h"
 
-// Surface
-STATIC MP_DEFINE_CONST_FUN_OBJ_2(blit_Surface_set_pen_obj, blit_Surface_set_pen);
-STATIC MP_DEFINE_CONST_FUN_OBJ_1(blit_Surface_clear_obj, blit_Surface_clear);
-
-STATIC const mp_rom_map_elem_t blit_Surface_locals_dict_table[] = {
-    { MP_ROM_QSTR(MP_QSTR_clear), MP_ROM_PTR(&blit_Surface_clear_obj) },
-    { MP_ROM_QSTR(MP_QSTR_set_pen), MP_ROM_PTR(&blit_Surface_set_pen_obj) },
-};
-STATIC MP_DEFINE_CONST_DICT(blit_Surface_locals_dict, blit_Surface_locals_dict_table);
-
-const mp_obj_type_t blit_Surface_type = {
-    { &mp_type_type },
-    .name = MP_QSTR_Surface,
-    //.make_new = blit_Surface_make_new, // TODO
-    .locals_dict = (mp_obj_dict_t*)&blit_Surface_locals_dict,
-};
-
+#include "api/surface.h"
 
 // globals
 STATIC mp_obj_t blit_init(void) {

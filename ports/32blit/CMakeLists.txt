@@ -35,11 +35,15 @@ set(MICROPY_SOURCE_PORT
     mphalport.cpp
     mod32blit.c
     mod32blit.cpp
+    blit-helpers.cpp
+    api/surface.c
+    api/surface.cpp
 )
 
 set(MICROPY_SOURCE_QSTR
     ${MICROPY_SOURCE_PY}
     ${PROJECT_SOURCE_DIR}/mod32blit.c
+    ${PROJECT_SOURCE_DIR}/api/surface.c
 )
 
 blit_executable(${MICROPY_TARGET}
