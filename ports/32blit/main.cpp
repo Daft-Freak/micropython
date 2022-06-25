@@ -16,7 +16,7 @@ extern "C" {
 #include "engine/api_private.hpp"
 
 // Allocate memory for the MicroPython GC heap.
-static char heap[4096];
+static char heap[128 * 1024];
 
 // callback from CDC code
 static void on_recv(const uint8_t *data, uint16_t len) {
