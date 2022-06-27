@@ -4,6 +4,21 @@
 
 using namespace blit;
 
+mp_obj_t blit_Surface_load(mp_obj_t filename_obj) {
+    std::string filename = mp_obj_str_get_str(filename_obj);
+
+    auto ret = Surface::load(filename);
+    return blit_wrap_obj(ret, Surface);
+}
+
+mp_obj_t blit_Surface_save(mp_obj_t self, mp_obj_t filename_obj) {
+    auto this_ptr = blit_unwrap_obj(self, Surface);
+    std::string filename = mp_obj_str_get_str(filename_obj);
+
+    auto ret = this_ptr->save(filename);
+    return mp_obj_new_bool(ret);
+}
+
 mp_obj_t blit_Surface_clear(mp_obj_t self) {
     auto this_ptr = blit_unwrap_obj(self, Surface);
 
@@ -111,6 +126,60 @@ mp_obj_t blit_Surface_watermark(mp_obj_t self) {
     auto this_ptr = blit_unwrap_obj(self, Surface);
 
     this_ptr->watermark();
+    return mp_const_none;
+}
+
+mp_obj_t blit_Surface_sprite_bounds(mp_obj_t self, mp_obj_t sprite_obj) {
+    auto this_ptr = blit_unwrap_obj(self, Surface);
+
+    if(mp_obj_is_int(sprite_obj)) {
+        uint16_t sprite = mp_obj_get_int(sprite_obj);
+        auto ret = this_ptr->sprite_bounds(sprite);
+        return blit_obj_from_Rect(ret);
+    }
+
+    if(blit_obj_is_Point(sprite_obj)) {
+        Point sprite = blit_obj_to_Point(sprite_obj);
+        auto ret = this_ptr->sprite_bounds(sprite);
+        return blit_obj_from_Rect(ret);
+    }
+
+    if(blit_obj_is_Rect(sprite_obj)) {
+        Rect sprite = blit_obj_to_Rect(sprite_obj);
+        auto ret = this_ptr->sprite_bounds(sprite);
+        return blit_obj_from_Rect(ret);
+    }
+
+    mp_raise_TypeError("invalid type for sprite");
+    return mp_const_none;
+}
+
+mp_obj_t blit_Surface_sprite(size_t n_args, const mp_obj_t *args) {
+    auto this_ptr = blit_unwrap_obj(args[0], Surface);
+    Point position = blit_obj_to_Point(args[2]);
+    Point origin = blit_obj_to_Point(args[3]);
+    Vec2 scale = blit_obj_to_Vec2(args[4]);
+    uint8_t transform = mp_obj_get_int(args[5]);
+
+    if(mp_obj_is_int(args[1])) {
+        uint16_t sprite = mp_obj_get_int(args[1]);
+        this_ptr->sprite(sprite, position, origin, scale, transform);
+        return mp_const_none;
+    }
+
+    if(blit_obj_is_Point(args[1])) {
+        Point sprite = blit_obj_to_Point(args[1]);
+        this_ptr->sprite(sprite, position, origin, scale, transform);
+        return mp_const_none;
+    }
+
+    if(blit_obj_is_Rect(args[1])) {
+        Rect sprite = blit_obj_to_Rect(args[1]);
+        this_ptr->sprite(sprite, position, origin, scale, transform);
+        return mp_const_none;
+    }
+
+    mp_raise_TypeError("invalid type for sprite");
     return mp_const_none;
 }
 

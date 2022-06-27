@@ -1,5 +1,8 @@
 #include "surface.h"
 
+STATIC MP_DEFINE_CONST_FUN_OBJ_1(blit_Surface_load_obj, blit_Surface_load);
+STATIC MP_DEFINE_CONST_STATICMETHOD_OBJ(blit_Surface_load_static_obj, MP_ROM_PTR(&blit_Surface_load_obj));
+STATIC MP_DEFINE_CONST_FUN_OBJ_2(blit_Surface_save_obj, blit_Surface_save);
 STATIC MP_DEFINE_CONST_FUN_OBJ_1(blit_Surface_clear_obj, blit_Surface_clear);
 STATIC MP_DEFINE_CONST_FUN_OBJ_2(blit_Surface_pixel_obj, blit_Surface_pixel);
 STATIC MP_DEFINE_CONST_FUN_OBJ_3(blit_Surface_v_span_obj, blit_Surface_v_span);
@@ -12,6 +15,8 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_blit_obj, 5, 5, blit_Sur
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_stretch_blit_obj, 5, 5, blit_Surface_stretch_blit);
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_stretch_blit_vspan_obj, 6, 6, blit_Surface_stretch_blit_vspan);
 STATIC MP_DEFINE_CONST_FUN_OBJ_1(blit_Surface_watermark_obj, blit_Surface_watermark);
+STATIC MP_DEFINE_CONST_FUN_OBJ_2(blit_Surface_sprite_bounds_obj, blit_Surface_sprite_bounds);
+STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_sprite_obj, 6, 6, blit_Surface_sprite);
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_bounds_obj, 1, 2, blit_Surface_bounds);
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_clip_obj, 1, 2, blit_Surface_clip);
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_alpha_obj, 1, 2, blit_Surface_alpha);
@@ -23,6 +28,8 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_rows_obj, 1, 2, blit_Sur
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_cols_obj, 1, 2, blit_Surface_cols);
 
 STATIC const mp_rom_map_elem_t blit_Surface_locals_dict_table[] = {
+    { MP_ROM_QSTR(MP_QSTR_load), MP_ROM_PTR(&blit_Surface_load_static_obj) },
+    { MP_ROM_QSTR(MP_QSTR_save), MP_ROM_PTR(&blit_Surface_save_obj) },
     { MP_ROM_QSTR(MP_QSTR_clear), MP_ROM_PTR(&blit_Surface_clear_obj) },
     { MP_ROM_QSTR(MP_QSTR_pixel), MP_ROM_PTR(&blit_Surface_pixel_obj) },
     { MP_ROM_QSTR(MP_QSTR_v_span), MP_ROM_PTR(&blit_Surface_v_span_obj) },
@@ -35,6 +42,8 @@ STATIC const mp_rom_map_elem_t blit_Surface_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_stretch_blit), MP_ROM_PTR(&blit_Surface_stretch_blit_obj) },
     { MP_ROM_QSTR(MP_QSTR_stretch_blit_vspan), MP_ROM_PTR(&blit_Surface_stretch_blit_vspan_obj) },
     { MP_ROM_QSTR(MP_QSTR_watermark), MP_ROM_PTR(&blit_Surface_watermark_obj) },
+    { MP_ROM_QSTR(MP_QSTR_sprite_bounds), MP_ROM_PTR(&blit_Surface_sprite_bounds_obj) },
+    { MP_ROM_QSTR(MP_QSTR_sprite), MP_ROM_PTR(&blit_Surface_sprite_obj) },
     { MP_ROM_QSTR(MP_QSTR_bounds), MP_ROM_PTR(&blit_Surface_bounds_obj) },
     { MP_ROM_QSTR(MP_QSTR_clip), MP_ROM_PTR(&blit_Surface_clip_obj) },
     { MP_ROM_QSTR(MP_QSTR_alpha), MP_ROM_PTR(&blit_Surface_alpha_obj) },

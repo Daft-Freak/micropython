@@ -2,7 +2,7 @@
 
 using namespace blit;
 
-// some of these may be an actual types in future
+// some of these may be actual types in future
 
 Pen blit_obj_to_Pen(mp_obj_t obj) {
     if (mp_obj_is_type(obj, &mp_type_tuple)) {
@@ -72,6 +72,10 @@ mp_obj_t blit_obj_from_Point(Point p) {
     return mp_obj_new_tuple(2, items);
 }
 
+bool blit_obj_is_Point(mp_obj_t obj) {
+    return mp_obj_is_type(obj, &mp_type_tuple) && ((mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj))->len == 2;
+}
+
 Size blit_obj_to_Size(mp_obj_t obj) {
     if (mp_obj_is_type(obj, &mp_type_tuple)) {
         auto tuple = (mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj);
@@ -133,3 +137,34 @@ mp_obj_t blit_obj_from_Rect(Rect r) {
     return mp_obj_new_tuple(4, items);
 }
 
+bool blit_obj_is_Rect(mp_obj_t obj) {
+    return mp_obj_is_type(obj, &mp_type_tuple) && ((mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj))->len == 4;
+}
+
+Vec2 blit_obj_to_Vec2(mp_obj_t obj)  {
+    if (mp_obj_is_type(obj, &mp_type_tuple)) {
+        auto tuple = (mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj);
+
+        if(tuple->len == 2) {
+            return Vec2{
+                mp_obj_get_float(tuple->items[0]),
+                mp_obj_get_float(tuple->items[1])
+            };
+        } else {
+            mp_raise_ValueError("vec2 tuples must contain 2 items");
+        }
+    } else {
+        mp_raise_TypeError("invalid type for vec2 (expected a tuple)");
+    }
+
+    return Vec2();
+}
+
+mp_obj_t blit_obj_from_Vec2(Vec2 v) {
+    mp_obj_t items[]{
+        mp_obj_new_float(v.x),
+        mp_obj_new_float(v.y),
+    };
+
+    return mp_obj_new_tuple(2, items);
+}

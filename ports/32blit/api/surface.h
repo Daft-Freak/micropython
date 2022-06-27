@@ -6,6 +6,8 @@
 extern "C" {
 #endif
 
+mp_obj_t blit_Surface_load(mp_obj_t filename_obj);
+mp_obj_t blit_Surface_save(mp_obj_t self, mp_obj_t filename_obj);
 mp_obj_t blit_Surface_clear(mp_obj_t self);
 mp_obj_t blit_Surface_pixel(mp_obj_t self, mp_obj_t p_obj);
 mp_obj_t blit_Surface_v_span(mp_obj_t self, mp_obj_t p_obj, mp_obj_t c_obj);
@@ -18,6 +20,8 @@ mp_obj_t blit_Surface_blit(size_t n_args, const mp_obj_t *args);
 mp_obj_t blit_Surface_stretch_blit(size_t n_args, const mp_obj_t *args);
 mp_obj_t blit_Surface_stretch_blit_vspan(size_t n_args, const mp_obj_t *args);
 mp_obj_t blit_Surface_watermark(mp_obj_t self);
+mp_obj_t blit_Surface_sprite_bounds(mp_obj_t self, mp_obj_t sprite_obj);
+mp_obj_t blit_Surface_sprite(size_t n_args, const mp_obj_t *args);
 mp_obj_t blit_Surface_bounds(size_t n_args, const mp_obj_t *args);
 mp_obj_t blit_Surface_clip(size_t n_args, const mp_obj_t *args);
 mp_obj_t blit_Surface_alpha(size_t n_args, const mp_obj_t *args);
