@@ -47,6 +47,9 @@ void init() {
     pyexec_event_repl_init();
 
 #ifdef TARGET_32BLIT_HW
+    extern char _edata, _estack;
+    mp_stack_set_limit(&_edata - &_estack - 256);
+
     blit::api.cdc_received = on_recv;
 #endif
 }
