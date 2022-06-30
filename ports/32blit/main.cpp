@@ -60,8 +60,19 @@ void init() {
 
 void update(uint32_t time) {
 
-    if(MP_STATE_PORT(update_callback_obj))
-        mp_call_function_1(MP_STATE_PORT(update_callback_obj), mp_obj_new_int(time));
+    if(MP_STATE_PORT(update_callback_obj)) {
+        nlr_buf_t nlr;
+
+        if (nlr_push(&nlr) == 0) {
+            mp_call_function_1(MP_STATE_PORT(update_callback_obj), mp_obj_new_int(time));
+            nlr_pop();
+        } else {
+            // error
+            mp_obj_print_exception(&mp_plat_print, (mp_obj_t)nlr.ret_val);
+
+            MP_STATE_PORT(update_callback_obj) = nullptr;
+        }
+    }
 
 #ifndef TARGET_32BLIT_HW
     // messy stdin polling
@@ -88,8 +99,19 @@ void update(uint32_t time) {
 }
 
 void render(uint32_t time) {
-    if(MP_STATE_PORT(render_callback_obj))
-        mp_call_function_1(MP_STATE_PORT(render_callback_obj), mp_obj_new_int(time));
+    if(MP_STATE_PORT(render_callback_obj)) {
+        nlr_buf_t nlr;
+
+        if (nlr_push(&nlr) == 0) {
+            mp_call_function_1(MP_STATE_PORT(render_callback_obj), mp_obj_new_int(time));
+            nlr_pop();
+        } else {
+            // error
+            mp_obj_print_exception(&mp_plat_print, (mp_obj_t)nlr.ret_val);
+
+            MP_STATE_PORT(render_callback_obj) = nullptr;
+        }
+    }
 }
 
 // Handle uncaught exceptions (should never be reached in a correct C implementation).
