@@ -21,10 +21,17 @@ static char heap[128 * 1024];
 #ifdef TARGET_32BLIT_HW
 extern "C" void do_init(int);
 
+const uint8_t *cdc_data = nullptr;
+int cdc_data_available = 0;
+
 // callback from CDC code
 static void on_recv(const uint8_t *data, uint16_t len) {
-    for(auto i = 0u; i < len; i++) {
-        if (pyexec_event_repl_process_char(char(data[i]))) {
+    cdc_data = data;
+    cdc_data_available = len;
+    while(cdc_data_available) {
+        cdc_data_available--;
+
+        if (pyexec_event_repl_process_char(char(*cdc_data++))) {
 
             // super hacky restart
             extern char flash_start;
