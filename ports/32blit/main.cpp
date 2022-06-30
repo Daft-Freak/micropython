@@ -105,12 +105,3 @@ void gc_collect(void) {
     gc_collect_end();
 }
 
-// There is no filesystem so stat'ing returns nothing.
-mp_import_stat_t mp_import_stat(const char *path) {
-    return MP_IMPORT_STAT_NO_EXIST;
-}
-
-// There is no filesystem so opening a file raises an exception.
-mp_lexer_t *mp_lexer_new_from_file(const char *filename) {
-    mp_raise_OSError(MP_ENOENT);
-}

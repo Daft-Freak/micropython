@@ -6,6 +6,7 @@
 
 // Python internal features.
 #define MICROPY_ENABLE_GC                       (1)
+#define MICROPY_READER_VFS                      (1)
 #define MICROPY_HELPER_REPL                     (1)
 #define MICROPY_ERROR_REPORTING                 (MICROPY_ERROR_REPORTING_TERSE)
 #define MICROPY_FLOAT_IMPL                      (MICROPY_FLOAT_IMPL_FLOAT)
@@ -23,6 +24,8 @@
 #define MICROPY_PY_UASYNCIO                     (0)
 #define MICROPY_PY_UJSON                        (0)
 #define MICROPY_PY_USELECT                      (0)
+
+#define MICROPY_VFS                             (1)
 
 // Type definitions for the specific machine.
 
