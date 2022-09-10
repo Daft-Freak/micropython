@@ -18,29 +18,14 @@ extern "C" {
 // Allocate memory for the MicroPython GC heap.
 static char heap[128 * 1024];
 
-#ifdef TARGET_32BLIT_HW
-extern "C" void do_init(int);
+static void do_mp_init() {
+    mp_init();
 
-const uint8_t *cdc_data = nullptr;
-int cdc_data_available = 0;
+    MP_STATE_PORT(render_callback_obj) = nullptr;
+    MP_STATE_PORT(update_callback_obj) = nullptr;
 
-// callback from CDC code
-static void on_recv(const uint8_t *data, uint16_t len) {
-    cdc_data = data;
-    cdc_data_available = len;
-    while(cdc_data_available) {
-        cdc_data_available--;
-
-        if (pyexec_event_repl_process_char(char(*cdc_data++))) {
-
-            // super hacky restart
-            extern char flash_start;
-            do_init((intptr_t)&flash_start & 0x1FFFFFF);
-        }
-    }
+    pyexec_event_repl_init();
 }
-
-#endif
 
 void init() {
     // Initialise the MicroPython runtime.
@@ -53,15 +38,11 @@ void init() {
 #endif
 
     gc_init(heap, heap + sizeof(heap));
-    mp_init();
 
-    MP_STATE_PORT(render_callback_obj) = nullptr;
-    MP_STATE_PORT(update_callback_obj) = nullptr;
-
-    pyexec_event_repl_init();
+    do_mp_init();
 
 #ifdef TARGET_32BLIT_HW
-    blit::api.cdc_received = on_recv;
+    blit::api.set_raw_cdc_enabled(true);
 #endif
 }
 
@@ -81,7 +62,18 @@ void update(uint32_t time) {
         }
     }
 
-#ifndef TARGET_32BLIT_HW
+#ifdef TARGET_32BLIT_HW
+    uint8_t b;
+    while(blit::api.cdc_read(&b, 1)) {
+        if (pyexec_event_repl_process_char(b)) {
+            // reset
+            gc_sweep_all();
+            mp_deinit();
+            do_mp_init();
+        }
+    }
+
+#else
     // messy stdin polling
     // TODO: don't do this
     struct timeval tv = {};
