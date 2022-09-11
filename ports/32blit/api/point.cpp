@@ -31,6 +31,16 @@ mp_obj_t blit_Point_binary_op(mp_binary_op_t op, mp_obj_t lhs, mp_obj_t rhs) {
             int right_side = mp_obj_get_int(rhs);
             return blit_obj_from_Point(*left_side / right_side);
         }
+        case MP_BINARY_OP_EQUAL:
+        {
+            auto right_side = blit_unwrap_obj_val(rhs, Point);
+            return mp_obj_new_bool(*left_side == *right_side);
+        }
+        case MP_BINARY_OP_NOT_EQUAL:
+        {
+            auto right_side = blit_unwrap_obj_val(rhs, Point);
+            return mp_obj_new_bool(*left_side != *right_side);
+        }
 
         default:
             return MP_OBJ_NULL;
