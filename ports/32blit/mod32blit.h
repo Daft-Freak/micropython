@@ -16,7 +16,13 @@ typedef struct ConstObjWrapper {
     const void *ptr;
 } ConstObjWrapper;
 
+typedef struct EmbedObjWrapper {
+    mp_obj_base_t base;
+    char v[]; // placeholder for the actual data
+} EmbedObjWrapper;
+
 #define blit_unwrap_obj(obj, type) (type *)((ObjWrapper *)MP_OBJ_TO_PTR(obj))->ptr
+#define blit_unwrap_obj_val(obj, type) (type *)&((EmbedObjWrapper *)MP_OBJ_TO_PTR(obj))->v
 #define blit_wrap_obj(obj_ptr, type) blit_wrap_obj_type(obj_ptr, &blit_##type##_type)
 
 mp_obj_t blit_wrap_obj_type(void *obj_ptr, const mp_obj_type_t *type);

@@ -1,6 +1,14 @@
 #include "blit-helpers.hpp"
 
+#include "api/point.h"
+
 using namespace blit;
+
+struct blit_Point {
+    mp_obj_base_t base;
+    Point val;
+};
+
 
 // some of these may be actual types in future
 
@@ -44,8 +52,29 @@ mp_obj_t blit_obj_from_Pen(Pen p) {
     return mp_obj_new_tuple(4, items);
 }
 
+// slightly custom constructor
+mp_obj_t blit_Point_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
+    mp_arg_check_num(n_args, n_kw, 0, 2, false);
+
+    auto p = m_new_obj(blit_Point);
+    p->base.type = &blit_Point_type;
+
+    if(n_args == 0)
+        new(&p->val) Point();
+    else if(n_args == 1)
+        new(&p->val) Point(blit_obj_to_Point(args[0]));
+    else // n_args == 2
+        new(&p->val) Point(mp_obj_get_int(args[0]), mp_obj_get_int(args[1]));
+
+    return MP_OBJ_FROM_PTR(p);
+}
+
 Point blit_obj_to_Point(mp_obj_t obj) {
-    if (mp_obj_is_type(obj, &mp_type_tuple)) {
+    if (mp_obj_is_type(obj, &blit_Point_type)) {
+        // real point
+        auto p = (blit_Point *)MP_OBJ_TO_PTR(obj);
+        return p->val;
+    } else if (mp_obj_is_type(obj, &mp_type_tuple)) {
         auto tuple = (mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj);
 
         if(tuple->len == 2) {
@@ -57,7 +86,7 @@ Point blit_obj_to_Point(mp_obj_t obj) {
             mp_raise_ValueError("point tuples must contain 2 items");
         }
     } else {
-        mp_raise_TypeError("invalid type for point (expected a tuple)");
+        mp_raise_TypeError("invalid type for point (expected Point or a tuple)");
     }
 
     return {};
