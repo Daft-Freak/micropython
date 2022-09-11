@@ -1,8 +1,11 @@
 #include "mod32blit.h"
 
+#include "api/font.h"
 #include "api/surface.h"
 
 #include "32blit.hpp"
+
+const ConstObjWrapper blit_minimal_font = {&blit_Font_type, &blit::minimal_font};
 
 const ObjWrapper blit_screen = {&blit_Surface_type, &blit::screen};
 

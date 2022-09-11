@@ -36,6 +36,9 @@ set(MICROPY_SOURCE_PORT
     mod32blit.c
     mod32blit.cpp
     blit-helpers.cpp
+
+    api/font.c
+    api/font.cpp
     api/surface.c
     api/surface.cpp
 )
@@ -44,6 +47,7 @@ set(MICROPY_SOURCE_QSTR
     ${MICROPY_SOURCE_PY}
     ${MICROPY_SOURCE_EXTMOD}
     ${PROJECT_SOURCE_DIR}/mod32blit.c
+    ${PROJECT_SOURCE_DIR}/api/font.c
     ${PROJECT_SOURCE_DIR}/api/surface.c
     ${PROJECT_SOURCE_DIR}/api/surface.cpp
 )

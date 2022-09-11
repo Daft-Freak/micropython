@@ -88,6 +88,41 @@ mp_obj_t blit_Surface_triangle(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
+mp_obj_t blit_Surface_text(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args) {
+    static const mp_arg_t allowed_args[] = {
+        {MP_QSTR_this, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_message, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_font, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_pos_rect, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_variable, MP_ARG_BOOL, {.u_bool = true}},
+        {MP_QSTR_align, MP_ARG_INT, {.u_int = int(TextAlign::top_left)}},
+    };
+
+    mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
+    mp_arg_parse_all(n_args, pos_args, kw_args, MP_ARRAY_SIZE(allowed_args), allowed_args, args);
+
+    auto this_ptr = blit_unwrap_obj(args[0].u_obj, Surface);
+    std::string_view message = mp_obj_str_get_str(args[1].u_obj);
+    Font &font = *blit_unwrap_obj(args[2].u_obj, Font);
+    float variable = args[4].u_bool;
+    TextAlign align = TextAlign(args[5].u_int);
+
+    if(blit_obj_is_Point(args[3].u_obj)) {
+        Point pos_rect = blit_obj_to_Point(args[3].u_obj);
+        this_ptr->text(message, font, pos_rect, variable, align);
+        return mp_const_none;
+    }
+
+    if(blit_obj_is_Rect(args[3].u_obj)) {
+        Rect pos_rect = blit_obj_to_Rect(args[3].u_obj);
+        this_ptr->text(message, font, pos_rect, variable, align);
+        return mp_const_none;
+    }
+
+    mp_raise_TypeError("invalid type for pos_rect");
+    return mp_const_none;
+}
+
 mp_obj_t blit_Surface_blit(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args) {
     static const mp_arg_t allowed_args[] = {
         {MP_QSTR_this, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},

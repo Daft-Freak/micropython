@@ -1,5 +1,6 @@
 #include "mod32blit.h"
 
+#include "api/font.h"
 #include "api/surface.h"
 
 // globals
@@ -16,9 +17,12 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_0(blit_init_obj, blit_init);
 STATIC const mp_rom_map_elem_t blit_module_globals_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_blit) },
 
+    { MP_ROM_QSTR(MP_QSTR_Font), (mp_obj_t)&blit_Font_type },
     { MP_ROM_QSTR(MP_QSTR_Surface), (mp_obj_t)&blit_Surface_type },
 
     { MP_ROM_QSTR(MP_QSTR_init), MP_ROM_PTR(&blit_init_obj) },
+
+    { MP_ROM_QSTR(MP_QSTR_minimal_font), MP_ROM_PTR(&blit_minimal_font) },
 
     { MP_ROM_QSTR(MP_QSTR_screen), MP_ROM_PTR(&blit_screen) },
 };

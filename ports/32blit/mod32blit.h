@@ -11,12 +11,19 @@ typedef struct ObjWrapper {
     void *ptr;
 } ObjWrapper;
 
+typedef struct ConstObjWrapper {
+    mp_obj_base_t base;
+    const void *ptr;
+} ConstObjWrapper;
+
 #define blit_unwrap_obj(obj, type) (type *)((ObjWrapper *)MP_OBJ_TO_PTR(obj))->ptr
 #define blit_wrap_obj(obj_ptr, type) blit_wrap_obj_type(obj_ptr, &blit_##type##_type)
 
 mp_obj_t blit_wrap_obj_type(void *obj_ptr, const mp_obj_type_t *type);
 
 // globals
+extern const ConstObjWrapper blit_minimal_font;
+
 extern const ObjWrapper blit_screen;
 
 #ifdef __cplusplus
