@@ -16,14 +16,6 @@ typedef struct ObjWrapper {
 
 mp_obj_t blit_wrap_obj_type(void *obj_ptr, const mp_obj_type_t *type);
 
-// types
-
-// Surface
-mp_obj_t blit_Surface_set_pen(mp_obj_t self, mp_obj_t pen);
-mp_obj_t blit_Surface_clear(mp_obj_t self);
-
-extern const mp_obj_type_t blit_Surface_type;
-
 // globals
 extern const ObjWrapper blit_screen;
 
