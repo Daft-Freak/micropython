@@ -93,15 +93,18 @@ Point blit_obj_to_Point(mp_obj_t obj) {
 }
 
 mp_obj_t blit_obj_from_Point(Point p) {
-    mp_obj_t items[]{
-        mp_obj_new_int(p.x),
-        mp_obj_new_int(p.y),
-    };
+    auto pp = m_new_obj(blit_Point);
+    pp->base.type = &blit_Point_type;
+    pp->val = p;
 
-    return mp_obj_new_tuple(2, items);
+    return MP_OBJ_FROM_PTR(pp);
 }
 
 bool blit_obj_is_Point(mp_obj_t obj) {
+
+    if(mp_obj_is_type(obj, &blit_Point_type))
+        return true;
+
     return mp_obj_is_type(obj, &mp_type_tuple) && ((mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj))->len == 2;
 }
 
