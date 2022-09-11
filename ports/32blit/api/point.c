@@ -14,5 +14,6 @@ const mp_obj_type_t blit_Point_type = {
     { &mp_type_type },
     .name = MP_QSTR_Point,
     .make_new = blit_Point_make_new,
+    .binary_op = blit_Point_binary_op,
     .locals_dict = (mp_obj_dict_t*)&blit_Point_locals_dict,
 };
