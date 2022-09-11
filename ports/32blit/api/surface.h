@@ -17,6 +17,8 @@ mp_obj_t blit_Surface_circle(mp_obj_t self, mp_obj_t c_obj, mp_obj_t r_obj);
 mp_obj_t blit_Surface_line(mp_obj_t self, mp_obj_t p1_obj, mp_obj_t p2_obj);
 mp_obj_t blit_Surface_triangle(size_t n_args, const mp_obj_t *args);
 mp_obj_t blit_Surface_text(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args);
+mp_obj_t blit_Surface_measure_text(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args);
+mp_obj_t blit_Surface_wrap_text(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args);
 mp_obj_t blit_Surface_blit(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args);
 mp_obj_t blit_Surface_stretch_blit(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args);
 mp_obj_t blit_Surface_stretch_blit_vspan(size_t n_args, const mp_obj_t *args);

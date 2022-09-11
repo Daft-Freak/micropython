@@ -123,6 +123,50 @@ mp_obj_t blit_Surface_text(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw
     return mp_const_none;
 }
 
+mp_obj_t blit_Surface_measure_text(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args) {
+    static const mp_arg_t allowed_args[] = {
+        {MP_QSTR_this, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_message, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_font, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_variable, MP_ARG_BOOL, {.u_bool = true}},
+    };
+
+    mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
+    mp_arg_parse_all(n_args, pos_args, kw_args, MP_ARRAY_SIZE(allowed_args), allowed_args, args);
+
+    auto this_ptr = blit_unwrap_obj(args[0].u_obj, Surface);
+    std::string_view message = mp_obj_str_get_str(args[1].u_obj);
+    Font &font = *blit_unwrap_obj(args[2].u_obj, Font);
+    float variable = args[3].u_bool;
+
+    auto ret = this_ptr->measure_text(message, font, variable);
+    return blit_obj_from_Size(ret);
+}
+
+mp_obj_t blit_Surface_wrap_text(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args) {
+    static const mp_arg_t allowed_args[] = {
+        {MP_QSTR_this, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_message, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_width, MP_ARG_REQUIRED | MP_ARG_INT, {.u_int = 0}},
+        {MP_QSTR_font, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_variable, MP_ARG_BOOL, {.u_bool = true}},
+        {MP_QSTR_words, MP_ARG_BOOL, {.u_bool = true}},
+    };
+
+    mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
+    mp_arg_parse_all(n_args, pos_args, kw_args, MP_ARRAY_SIZE(allowed_args), allowed_args, args);
+
+    auto this_ptr = blit_unwrap_obj(args[0].u_obj, Surface);
+    std::string_view message = mp_obj_str_get_str(args[1].u_obj);
+    int32_t width = args[2].u_int;
+    Font &font = *blit_unwrap_obj(args[3].u_obj, Font);
+    float variable = args[4].u_bool;
+    float words = args[5].u_bool;
+
+    auto ret = this_ptr->wrap_text(message, width, font, variable, words);
+    return mp_obj_new_str(ret.data(), ret.length());
+}
+
 mp_obj_t blit_Surface_blit(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args) {
     static const mp_arg_t allowed_args[] = {
         {MP_QSTR_this, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},

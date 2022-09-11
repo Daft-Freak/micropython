@@ -12,6 +12,8 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_3(blit_Surface_circle_obj, blit_Surface_circle);
 STATIC MP_DEFINE_CONST_FUN_OBJ_3(blit_Surface_line_obj, blit_Surface_line);
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_triangle_obj, 4, 4, blit_Surface_triangle);
 STATIC MP_DEFINE_CONST_FUN_OBJ_KW(blit_Surface_text_obj, 4, blit_Surface_text);
+STATIC MP_DEFINE_CONST_FUN_OBJ_KW(blit_Surface_measure_text_obj, 3, blit_Surface_measure_text);
+STATIC MP_DEFINE_CONST_FUN_OBJ_KW(blit_Surface_wrap_text_obj, 4, blit_Surface_wrap_text);
 STATIC MP_DEFINE_CONST_FUN_OBJ_KW(blit_Surface_blit_obj, 4, blit_Surface_blit);
 STATIC MP_DEFINE_CONST_FUN_OBJ_KW(blit_Surface_stretch_blit_obj, 4, blit_Surface_stretch_blit);
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_stretch_blit_vspan_obj, 6, 6, blit_Surface_stretch_blit_vspan);
@@ -40,6 +42,8 @@ STATIC const mp_rom_map_elem_t blit_Surface_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_line), MP_ROM_PTR(&blit_Surface_line_obj) },
     { MP_ROM_QSTR(MP_QSTR_triangle), MP_ROM_PTR(&blit_Surface_triangle_obj) },
     { MP_ROM_QSTR(MP_QSTR_text), MP_ROM_PTR(&blit_Surface_text_obj) },
+    { MP_ROM_QSTR(MP_QSTR_measure_text), MP_ROM_PTR(&blit_Surface_measure_text_obj) },
+    { MP_ROM_QSTR(MP_QSTR_wrap_text), MP_ROM_PTR(&blit_Surface_wrap_text_obj) },
     { MP_ROM_QSTR(MP_QSTR_blit), MP_ROM_PTR(&blit_Surface_blit_obj) },
     { MP_ROM_QSTR(MP_QSTR_stretch_blit), MP_ROM_PTR(&blit_Surface_stretch_blit_obj) },
     { MP_ROM_QSTR(MP_QSTR_stretch_blit_vspan), MP_ROM_PTR(&blit_Surface_stretch_blit_vspan_obj) },
