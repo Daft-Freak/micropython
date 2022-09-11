@@ -11,12 +11,12 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_2(blit_Surface_rectangle_obj, blit_Surface_rectan
 STATIC MP_DEFINE_CONST_FUN_OBJ_3(blit_Surface_circle_obj, blit_Surface_circle);
 STATIC MP_DEFINE_CONST_FUN_OBJ_3(blit_Surface_line_obj, blit_Surface_line);
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_triangle_obj, 4, 4, blit_Surface_triangle);
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_blit_obj, 5, 5, blit_Surface_blit);
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_stretch_blit_obj, 5, 5, blit_Surface_stretch_blit);
+STATIC MP_DEFINE_CONST_FUN_OBJ_KW(blit_Surface_blit_obj, 4, blit_Surface_blit);
+STATIC MP_DEFINE_CONST_FUN_OBJ_KW(blit_Surface_stretch_blit_obj, 4, blit_Surface_stretch_blit);
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_stretch_blit_vspan_obj, 6, 6, blit_Surface_stretch_blit_vspan);
 STATIC MP_DEFINE_CONST_FUN_OBJ_1(blit_Surface_watermark_obj, blit_Surface_watermark);
 STATIC MP_DEFINE_CONST_FUN_OBJ_2(blit_Surface_sprite_bounds_obj, blit_Surface_sprite_bounds);
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_sprite_obj, 6, 6, blit_Surface_sprite);
+STATIC MP_DEFINE_CONST_FUN_OBJ_KW(blit_Surface_sprite_obj, 3, blit_Surface_sprite);
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_bounds_obj, 1, 2, blit_Surface_bounds);
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_clip_obj, 1, 2, blit_Surface_clip);
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_Surface_alpha_obj, 1, 2, blit_Surface_alpha);

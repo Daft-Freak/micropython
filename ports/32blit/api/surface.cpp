@@ -88,23 +88,45 @@ mp_obj_t blit_Surface_triangle(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-mp_obj_t blit_Surface_blit(size_t n_args, const mp_obj_t *args) {
-    auto this_ptr = blit_unwrap_obj(args[0], Surface);
-    Surface *src = blit_unwrap_obj(args[1], Surface);
-    Rect src_r = blit_obj_to_Rect(args[2]);
-    Point dst_p = blit_obj_to_Point(args[3]);
-    int transforms = mp_obj_get_int(args[4]);
+mp_obj_t blit_Surface_blit(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args) {
+    static const mp_arg_t allowed_args[] = {
+        {MP_QSTR_this, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_src, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_src_r, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_dst_p, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_transforms, MP_ARG_INT, {.u_int = 0}},
+    };
+
+    mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
+    mp_arg_parse_all(n_args, pos_args, kw_args, MP_ARRAY_SIZE(allowed_args), allowed_args, args);
+
+    auto this_ptr = blit_unwrap_obj(args[0].u_obj, Surface);
+    Surface *src = blit_unwrap_obj(args[1].u_obj, Surface);
+    Rect src_r = blit_obj_to_Rect(args[2].u_obj);
+    Point dst_p = blit_obj_to_Point(args[3].u_obj);
+    int transforms = args[4].u_int;
 
     this_ptr->blit(src, src_r, dst_p, transforms);
     return mp_const_none;
 }
 
-mp_obj_t blit_Surface_stretch_blit(size_t n_args, const mp_obj_t *args) {
-    auto this_ptr = blit_unwrap_obj(args[0], Surface);
-    Surface *src = blit_unwrap_obj(args[1], Surface);
-    Rect src_r = blit_obj_to_Rect(args[2]);
-    Rect dst_r = blit_obj_to_Rect(args[3]);
-    int transforms = mp_obj_get_int(args[4]);
+mp_obj_t blit_Surface_stretch_blit(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args) {
+    static const mp_arg_t allowed_args[] = {
+        {MP_QSTR_this, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_src, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_src_r, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_dst_r, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_transforms, MP_ARG_INT, {.u_int = 0}},
+    };
+
+    mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
+    mp_arg_parse_all(n_args, pos_args, kw_args, MP_ARRAY_SIZE(allowed_args), allowed_args, args);
+
+    auto this_ptr = blit_unwrap_obj(args[0].u_obj, Surface);
+    Surface *src = blit_unwrap_obj(args[1].u_obj, Surface);
+    Rect src_r = blit_obj_to_Rect(args[2].u_obj);
+    Rect dst_r = blit_obj_to_Rect(args[3].u_obj);
+    int transforms = args[4].u_int;
 
     this_ptr->stretch_blit(src, src_r, dst_r, transforms);
     return mp_const_none;
@@ -154,27 +176,39 @@ mp_obj_t blit_Surface_sprite_bounds(mp_obj_t self, mp_obj_t sprite_obj) {
     return mp_const_none;
 }
 
-mp_obj_t blit_Surface_sprite(size_t n_args, const mp_obj_t *args) {
-    auto this_ptr = blit_unwrap_obj(args[0], Surface);
-    Point position = blit_obj_to_Point(args[2]);
-    Point origin = blit_obj_to_Point(args[3]);
-    Vec2 scale = blit_obj_to_Vec2(args[4]);
-    uint8_t transform = mp_obj_get_int(args[5]);
+mp_obj_t blit_Surface_sprite(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_args) {
+    static const mp_arg_t allowed_args[] = {
+        {MP_QSTR_this, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_sprite, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_position, MP_ARG_REQUIRED | MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_origin, MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_scale, MP_ARG_OBJ, {.u_obj = mp_const_none}},
+        {MP_QSTR_transform, MP_ARG_INT, {.u_int = 0}},
+    };
 
-    if(mp_obj_is_int(args[1])) {
-        uint16_t sprite = mp_obj_get_int(args[1]);
+    mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
+    mp_arg_parse_all(n_args, pos_args, kw_args, MP_ARRAY_SIZE(allowed_args), allowed_args, args);
+
+    auto this_ptr = blit_unwrap_obj(args[0].u_obj, Surface);
+    Point position = blit_obj_to_Point(args[2].u_obj);
+    Point origin = args[3].u_obj == mp_const_none ? Point{0, 0} : blit_obj_to_Point(args[3].u_obj);
+    Vec2 scale = args[4].u_obj == mp_const_none ? Vec2{1.0f, 1.0f} : blit_obj_to_Vec2(args[4].u_obj);
+    uint8_t transform = args[5].u_int;
+
+    if(mp_obj_is_int(args[1].u_obj)) {
+        uint16_t sprite = args[1].u_int;
         this_ptr->sprite(sprite, position, origin, scale, transform);
         return mp_const_none;
     }
 
-    if(blit_obj_is_Point(args[1])) {
-        Point sprite = blit_obj_to_Point(args[1]);
+    if(blit_obj_is_Point(args[1].u_obj)) {
+        Point sprite = blit_obj_to_Point(args[1].u_obj);
         this_ptr->sprite(sprite, position, origin, scale, transform);
         return mp_const_none;
     }
 
-    if(blit_obj_is_Rect(args[1])) {
-        Rect sprite = blit_obj_to_Rect(args[1]);
+    if(blit_obj_is_Rect(args[1].u_obj)) {
+        Rect sprite = blit_obj_to_Rect(args[1].u_obj);
         this_ptr->sprite(sprite, position, origin, scale, transform);
         return mp_const_none;
     }

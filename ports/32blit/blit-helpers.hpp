@@ -4,7 +4,9 @@ extern "C" {
 #include "py/runtime.h"
 }
 
+#ifndef NO_QSTR // 32blit include path is missing
 #include "32blit.hpp"
+#endif
 
 blit::Pen blit_obj_to_Pen(mp_obj_t obj);
 mp_obj_t blit_obj_from_Pen(blit::Pen p);
