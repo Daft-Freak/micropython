@@ -37,29 +37,27 @@ set(MICROPY_SOURCE_PORT
     mod32blit.cpp
     blit-helpers.cpp
 
+    api/enums.c
     api/font.c
     api/font.cpp
     api/point.c
     api/point.cpp
     api/rect.c
     api/rect.cpp
-    api/spritetransform.c
     api/surface.c
     api/surface.cpp
-    api/textalign.c
 )
 
 set(MICROPY_SOURCE_QSTR
     ${MICROPY_SOURCE_PY}
     ${MICROPY_SOURCE_EXTMOD}
     ${PROJECT_SOURCE_DIR}/mod32blit.c
+    ${PROJECT_SOURCE_DIR}/api/enums.c
     ${PROJECT_SOURCE_DIR}/api/font.c
     ${PROJECT_SOURCE_DIR}/api/point.c
     ${PROJECT_SOURCE_DIR}/api/rect.c
-    ${PROJECT_SOURCE_DIR}/api/spritetransform.c
     ${PROJECT_SOURCE_DIR}/api/surface.c
     ${PROJECT_SOURCE_DIR}/api/surface.cpp
-    ${PROJECT_SOURCE_DIR}/api/textalign.c
 )
 
 blit_executable(${MICROPY_TARGET}

@@ -1,11 +1,10 @@
 #include "mod32blit.h"
 
+#include "api/enums.h"
 #include "api/font.h"
 #include "api/point.h"
 #include "api/rect.h"
-#include "api/spritetransform.h"
 #include "api/surface.h"
-#include "api/textalign.h"
 
 // globals
 STATIC mp_obj_t blit_init(void) {
