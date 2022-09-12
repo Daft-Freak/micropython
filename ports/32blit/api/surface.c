@@ -66,6 +66,6 @@ STATIC MP_DEFINE_CONST_DICT(blit_Surface_locals_dict, blit_Surface_locals_dict_t
 const mp_obj_type_t blit_Surface_type = {
     { &mp_type_type },
     .name = MP_QSTR_Surface,
-    //.make_new = blit_Surface_make_new, // TODO
+
     .locals_dict = (mp_obj_dict_t*)&blit_Surface_locals_dict,
 };

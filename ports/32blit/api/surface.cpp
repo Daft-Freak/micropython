@@ -275,7 +275,7 @@ mp_obj_t blit_Surface_sprite(size_t n_args, const mp_obj_t *pos_args, mp_map_t *
     uint8_t transform = args[5].u_int;
 
     if(mp_obj_is_int(args[1].u_obj)) {
-        uint16_t sprite = args[1].u_int;
+        uint16_t sprite = mp_obj_get_int(args[1].u_obj);
         this_ptr->sprite(sprite, position, origin, scale, transform);
         return mp_const_none;
     }
