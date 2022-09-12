@@ -1,5 +1,6 @@
 #include "mod32blit.h"
 
+#include "api/buttonstate.h"
 #include "api/enums.h"
 #include "api/font.h"
 #include "api/point.h"
@@ -23,12 +24,14 @@ STATIC const mp_rom_map_elem_t blit_module_globals_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_blit) },
 
     // enums (types-ish)
+    { MP_ROM_QSTR(MP_QSTR_Button), (mp_obj_t)&blit_Button_type },
     { MP_ROM_QSTR(MP_QSTR_PixelFormat), (mp_obj_t)&blit_PixelFormat_type },
     { MP_ROM_QSTR(MP_QSTR_ScreenMode), (mp_obj_t)&blit_ScreenMode_type },
     { MP_ROM_QSTR(MP_QSTR_SpriteTransform), (mp_obj_t)&blit_SpriteTransform_type },
     { MP_ROM_QSTR(MP_QSTR_TextAlign), (mp_obj_t)&blit_TextAlign_type },
 
     // types
+    { MP_ROM_QSTR(MP_QSTR_ButtonState), (mp_obj_t)&blit_ButtonState_type },
     { MP_ROM_QSTR(MP_QSTR_Font), (mp_obj_t)&blit_Font_type },
     { MP_ROM_QSTR(MP_QSTR_Point), (mp_obj_t)&blit_Point_type },
     { MP_ROM_QSTR(MP_QSTR_Rect), (mp_obj_t)&blit_Rect_type },
@@ -39,6 +42,8 @@ STATIC const mp_rom_map_elem_t blit_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_set_screen_mode), MP_ROM_PTR(&blit_set_screen_mode_obj) },
 
     // global vars
+    { MP_ROM_QSTR(MP_QSTR_buttons), MP_ROM_PTR(&blit_buttons) },
+
     { MP_ROM_QSTR(MP_QSTR_minimal_font), MP_ROM_PTR(&blit_minimal_font) },
 
     { MP_ROM_QSTR(MP_QSTR_screen), MP_ROM_PTR(&blit_screen) },

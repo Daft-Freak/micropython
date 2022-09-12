@@ -37,6 +37,8 @@ set(MICROPY_SOURCE_PORT
     mod32blit.cpp
     blit-helpers.cpp
 
+    api/buttonstate.c
+    api/buttonstate.cpp
     api/enums.c
     api/font.c
     api/font.cpp
@@ -52,6 +54,7 @@ set(MICROPY_SOURCE_QSTR
     ${MICROPY_SOURCE_PY}
     ${MICROPY_SOURCE_EXTMOD}
     ${PROJECT_SOURCE_DIR}/mod32blit.c
+    ${PROJECT_SOURCE_DIR}/api/buttonstate.c
     ${PROJECT_SOURCE_DIR}/api/enums.c
     ${PROJECT_SOURCE_DIR}/api/font.c
     ${PROJECT_SOURCE_DIR}/api/point.c

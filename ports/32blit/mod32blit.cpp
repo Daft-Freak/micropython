@@ -1,9 +1,13 @@
 #include "mod32blit.h"
 
+#include "api/buttonstate.h"
 #include "api/font.h"
 #include "api/surface.h"
 
 #include "32blit.hpp"
+#include "engine/api_private.hpp"
+
+const ObjWrapper blit_buttons = {&blit_ButtonState_type, &blit::api.buttons}; // blit::buttons is a reference
 
 const ConstObjWrapper blit_minimal_font = {&blit_Font_type, &blit::minimal_font};
 
