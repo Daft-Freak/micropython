@@ -5,6 +5,7 @@
 #include "api/font.h"
 #include "api/point.h"
 #include "api/rect.h"
+#include "api/size.h"
 #include "api/surface.h"
 
 // globals
@@ -35,6 +36,7 @@ STATIC const mp_rom_map_elem_t blit_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_Font), (mp_obj_t)&blit_Font_type },
     { MP_ROM_QSTR(MP_QSTR_Point), (mp_obj_t)&blit_Point_type },
     { MP_ROM_QSTR(MP_QSTR_Rect), (mp_obj_t)&blit_Rect_type },
+    { MP_ROM_QSTR(MP_QSTR_Size), (mp_obj_t)&blit_Size_type },
     { MP_ROM_QSTR(MP_QSTR_Surface), (mp_obj_t)&blit_Surface_type },
 
     // functions

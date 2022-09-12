@@ -2,6 +2,7 @@
 
 #include "api/point.h"
 #include "api/rect.h"
+#include "api/size.h"
 
 using namespace blit;
 
@@ -13,6 +14,11 @@ struct blit_Point {
 struct blit_Rect {
     mp_obj_base_t base;
     Rect val;
+};
+
+struct blit_Size {
+    mp_obj_base_t base;
+    Size val;
 };
 
 // some of these may be actual types in future
@@ -113,8 +119,28 @@ bool blit_obj_is_Point(mp_obj_t obj) {
     return mp_obj_is_type(obj, &mp_type_tuple) && ((mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj))->len == 2;
 }
 
+mp_obj_t blit_Size_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
+    mp_arg_check_num(n_args, n_kw, 0, 2, false);
+
+    auto p = m_new_obj(blit_Size);
+    p->base.type = &blit_Size_type;
+
+    if(n_args == 0)
+        new(&p->val) Size();
+    else if(n_args == 1)
+        new(&p->val) Size(blit_obj_to_Size(args[0]));
+    else // n_args == 2
+        new(&p->val) Size(mp_obj_get_int(args[0]), mp_obj_get_int(args[1]));
+
+    return MP_OBJ_FROM_PTR(p);
+}
+
 Size blit_obj_to_Size(mp_obj_t obj) {
-    if (mp_obj_is_type(obj, &mp_type_tuple)) {
+    if (mp_obj_is_type(obj, &blit_Size_type)) {
+        // real size
+        auto p = (blit_Size *)MP_OBJ_TO_PTR(obj);
+        return p->val;
+    } else if (mp_obj_is_type(obj, &mp_type_tuple)) {
         auto tuple = (mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj);
 
         if(tuple->len == 2) {
@@ -133,12 +159,11 @@ Size blit_obj_to_Size(mp_obj_t obj) {
 }
 
 mp_obj_t blit_obj_from_Size(Size s) {
-    mp_obj_t items[]{
-        mp_obj_new_int(s.w),
-        mp_obj_new_int(s.h),
-    };
+    auto ps = m_new_obj(blit_Size);
+    ps->base.type = &blit_Size_type;
+    ps->val = s;
 
-    return mp_obj_new_tuple(2, items);
+    return MP_OBJ_FROM_PTR(ps);
 }
 
 mp_obj_t blit_Rect_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
