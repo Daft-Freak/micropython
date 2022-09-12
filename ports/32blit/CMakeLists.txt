@@ -43,8 +43,10 @@ set(MICROPY_SOURCE_PORT
     api/point.cpp
     api/rect.c
     api/rect.cpp
+    api/spritetransform.c
     api/surface.c
     api/surface.cpp
+    api/textalign.c
 )
 
 set(MICROPY_SOURCE_QSTR
@@ -54,8 +56,10 @@ set(MICROPY_SOURCE_QSTR
     ${PROJECT_SOURCE_DIR}/api/font.c
     ${PROJECT_SOURCE_DIR}/api/point.c
     ${PROJECT_SOURCE_DIR}/api/rect.c
+    ${PROJECT_SOURCE_DIR}/api/spritetransform.c
     ${PROJECT_SOURCE_DIR}/api/surface.c
     ${PROJECT_SOURCE_DIR}/api/surface.cpp
+    ${PROJECT_SOURCE_DIR}/api/textalign.c
 )
 
 blit_executable(${MICROPY_TARGET}

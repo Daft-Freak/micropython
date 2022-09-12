@@ -3,7 +3,9 @@
 #include "api/font.h"
 #include "api/point.h"
 #include "api/rect.h"
+#include "api/spritetransform.h"
 #include "api/surface.h"
+#include "api/textalign.h"
 
 // globals
 STATIC mp_obj_t blit_init(void) {
@@ -19,6 +21,11 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_0(blit_init_obj, blit_init);
 STATIC const mp_rom_map_elem_t blit_module_globals_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_blit) },
 
+    // enums (types-ish)
+    { MP_ROM_QSTR(MP_QSTR_SpriteTransform), (mp_obj_t)&blit_SpriteTransform_type },
+    { MP_ROM_QSTR(MP_QSTR_TextAlign), (mp_obj_t)&blit_TextAlign_type },
+
+    // types
     { MP_ROM_QSTR(MP_QSTR_Font), (mp_obj_t)&blit_Font_type },
     { MP_ROM_QSTR(MP_QSTR_Point), (mp_obj_t)&blit_Point_type },
     { MP_ROM_QSTR(MP_QSTR_Rect), (mp_obj_t)&blit_Rect_type },
