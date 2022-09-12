@@ -32,6 +32,8 @@ extern const ConstObjWrapper blit_minimal_font;
 
 extern const ObjWrapper blit_screen;
 
+mp_obj_t blit_set_screen_mode(size_t n_args, const mp_obj_t *args);
+
 #ifdef __cplusplus
 }
 #endif

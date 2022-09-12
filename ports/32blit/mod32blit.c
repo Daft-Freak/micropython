@@ -15,12 +15,16 @@ STATIC mp_obj_t blit_init(void) {
 
     return mp_const_none;
 }
+
 STATIC MP_DEFINE_CONST_FUN_OBJ_0(blit_init_obj, blit_init);
+STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(blit_set_screen_mode_obj, 1, 2, blit_set_screen_mode);
 
 STATIC const mp_rom_map_elem_t blit_module_globals_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_blit) },
 
     // enums (types-ish)
+    { MP_ROM_QSTR(MP_QSTR_PixelFormat), (mp_obj_t)&blit_PixelFormat_type },
+    { MP_ROM_QSTR(MP_QSTR_ScreenMode), (mp_obj_t)&blit_ScreenMode_type },
     { MP_ROM_QSTR(MP_QSTR_SpriteTransform), (mp_obj_t)&blit_SpriteTransform_type },
     { MP_ROM_QSTR(MP_QSTR_TextAlign), (mp_obj_t)&blit_TextAlign_type },
 
@@ -30,8 +34,11 @@ STATIC const mp_rom_map_elem_t blit_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_Rect), (mp_obj_t)&blit_Rect_type },
     { MP_ROM_QSTR(MP_QSTR_Surface), (mp_obj_t)&blit_Surface_type },
 
+    // functions
     { MP_ROM_QSTR(MP_QSTR_init), MP_ROM_PTR(&blit_init_obj) },
+    { MP_ROM_QSTR(MP_QSTR_set_screen_mode), MP_ROM_PTR(&blit_set_screen_mode_obj) },
 
+    // global vars
     { MP_ROM_QSTR(MP_QSTR_minimal_font), MP_ROM_PTR(&blit_minimal_font) },
 
     { MP_ROM_QSTR(MP_QSTR_screen), MP_ROM_PTR(&blit_screen) },

@@ -6,7 +6,11 @@
 extern "C" {
 #endif
 
-extern const mp_obj_type_t blit_SpriteTransform_type;extern const mp_obj_type_t blit_TextAlign_type;
+extern const mp_obj_type_t blit_PixelFormat_type;
+extern const mp_obj_type_t blit_ScreenMode_type;
+extern const mp_obj_type_t blit_SpriteTransform_type;
+extern const mp_obj_type_t blit_TextAlign_type;
+
 #ifdef __cplusplus
 }
 #endif

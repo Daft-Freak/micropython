@@ -16,3 +16,15 @@ mp_obj_t blit_wrap_obj_type(void *obj_ptr, const mp_obj_type_t *type) {
 
     return MP_OBJ_FROM_PTR(wrap);
 }
+
+mp_obj_t blit_set_screen_mode(size_t n_args, const mp_obj_t *args) {
+    auto mode = blit::ScreenMode(mp_obj_get_int(args[0]));
+    bool ret = true;
+
+    if(n_args == 2)
+        ret = blit::set_screen_mode(mode, blit::PixelFormat(mp_obj_get_int(args[1])));
+    else
+        blit::set_screen_mode(mode);
+
+    return mp_obj_new_bool(ret);
+}
