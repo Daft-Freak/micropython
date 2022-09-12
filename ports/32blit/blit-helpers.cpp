@@ -1,6 +1,7 @@
 #include "blit-helpers.hpp"
 
 #include "api/point.h"
+#include "api/rect.h"
 
 using namespace blit;
 
@@ -9,6 +10,10 @@ struct blit_Point {
     Point val;
 };
 
+struct blit_Rect {
+    mp_obj_base_t base;
+    Rect val;
+};
 
 // some of these may be actual types in future
 
@@ -136,8 +141,35 @@ mp_obj_t blit_obj_from_Size(Size s) {
     return mp_obj_new_tuple(2, items);
 }
 
+mp_obj_t blit_Rect_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
+    mp_arg_check_num(n_args, n_kw, 0, 4, false);
+
+    auto p = m_new_obj(blit_Rect);
+    p->base.type = &blit_Rect_type;
+
+    if(n_args == 0)
+        new(&p->val) Rect();
+    else if(n_args == 1)
+        new(&p->val) Rect(blit_obj_to_Rect(args[0]));
+    else if(n_args == 2 && blit_obj_is_Point(args[0])) {
+        if(blit_obj_is_Point(args[1]))
+            new(&p->val) Rect(blit_obj_to_Point(args[0]), blit_obj_to_Point(args[1]));
+        else // size
+            new(&p->val) Rect(blit_obj_to_Point(args[0]), blit_obj_to_Size(args[1]));
+    } else if(n_args == 4)
+        new(&p->val) Rect(mp_obj_get_int(args[0]), mp_obj_get_int(args[1]), mp_obj_get_int(args[2]), mp_obj_get_int(args[3]));
+    else
+        mp_raise_TypeError("invalid arguments");
+
+    return MP_OBJ_FROM_PTR(p);
+}
+
 Rect blit_obj_to_Rect(mp_obj_t obj)  {
-    if (mp_obj_is_type(obj, &mp_type_tuple)) {
+    if (mp_obj_is_type(obj, &blit_Rect_type)) {
+        // real point
+        auto p = (blit_Rect *)MP_OBJ_TO_PTR(obj);
+        return p->val;
+    } else if (mp_obj_is_type(obj, &mp_type_tuple)) {
         auto tuple = (mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj);
 
         // TODO: point/size pair?
@@ -159,17 +191,17 @@ Rect blit_obj_to_Rect(mp_obj_t obj)  {
 }
 
 mp_obj_t blit_obj_from_Rect(Rect r) {
-    mp_obj_t items[]{
-        mp_obj_new_int(r.x),
-        mp_obj_new_int(r.y),
-        mp_obj_new_int(r.w),
-        mp_obj_new_int(r.h),
-    };
+    auto pr = m_new_obj(blit_Rect);
+    pr->base.type = &blit_Rect_type;
+    pr->val = r;
 
-    return mp_obj_new_tuple(4, items);
+    return MP_OBJ_FROM_PTR(pr);
 }
 
 bool blit_obj_is_Rect(mp_obj_t obj) {
+    if(mp_obj_is_type(obj, &blit_Rect_type))
+        return true;
+
     return mp_obj_is_type(obj, &mp_type_tuple) && ((mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj))->len == 4;
 }
 

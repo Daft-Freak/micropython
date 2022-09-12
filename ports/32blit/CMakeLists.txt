@@ -41,6 +41,8 @@ set(MICROPY_SOURCE_PORT
     api/font.cpp
     api/point.c
     api/point.cpp
+    api/rect.c
+    api/rect.cpp
     api/surface.c
     api/surface.cpp
 )
@@ -51,6 +53,7 @@ set(MICROPY_SOURCE_QSTR
     ${PROJECT_SOURCE_DIR}/mod32blit.c
     ${PROJECT_SOURCE_DIR}/api/font.c
     ${PROJECT_SOURCE_DIR}/api/point.c
+    ${PROJECT_SOURCE_DIR}/api/rect.c
     ${PROJECT_SOURCE_DIR}/api/surface.c
     ${PROJECT_SOURCE_DIR}/api/surface.cpp
 )
