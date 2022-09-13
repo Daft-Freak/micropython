@@ -48,7 +48,9 @@ STATIC const mp_rom_map_elem_t blit_module_globals_table[] = {
     // global vars
     { MP_ROM_QSTR(MP_QSTR_buttons), MP_ROM_PTR(&blit_buttons) },
 
+    { MP_ROM_QSTR(MP_QSTR_fat_font), MP_ROM_PTR(&blit_fat_font) },
     { MP_ROM_QSTR(MP_QSTR_minimal_font), MP_ROM_PTR(&blit_minimal_font) },
+    { MP_ROM_QSTR(MP_QSTR_outline_font), MP_ROM_PTR(&blit_outline_font) },
 
     { MP_ROM_QSTR(MP_QSTR_screen), MP_ROM_PTR(&blit_screen) },
 };

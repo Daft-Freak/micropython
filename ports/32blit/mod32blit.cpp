@@ -9,7 +9,9 @@
 
 const ObjWrapper blit_buttons = {&blit_ButtonState_type, &blit::api.buttons}; // blit::buttons is a reference
 
+const ConstObjWrapper blit_fat_font = {&blit_Font_type, &blit::fat_font};
 const ConstObjWrapper blit_minimal_font = {&blit_Font_type, &blit::minimal_font};
+const ConstObjWrapper blit_outline_font = {&blit_Font_type, &blit::outline_font};
 
 const ObjWrapper blit_screen = {&blit_Surface_type, &blit::screen};
 

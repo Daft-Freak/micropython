@@ -30,7 +30,9 @@ mp_obj_t blit_wrap_obj_type(void *obj_ptr, const mp_obj_type_t *type);
 // globals
 extern const ObjWrapper blit_buttons;
 
+extern const ConstObjWrapper blit_fat_font;
 extern const ConstObjWrapper blit_minimal_font;
+extern const ConstObjWrapper blit_outline_font;
 
 extern const ObjWrapper blit_screen;
 
