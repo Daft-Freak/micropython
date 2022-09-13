@@ -3,6 +3,7 @@
 #include "api/point.h"
 #include "api/rect.h"
 #include "api/size.h"
+#include "api/vec2.h"
 
 using namespace blit;
 
@@ -19,6 +20,11 @@ struct blit_Rect {
 struct blit_Size {
     mp_obj_base_t base;
     Size val;
+};
+
+struct blit_Vec2 {
+    mp_obj_base_t base;
+    Vec2 val;
 };
 
 // some of these may be actual types in future
@@ -230,8 +236,28 @@ bool blit_obj_is_Rect(mp_obj_t obj) {
     return mp_obj_is_type(obj, &mp_type_tuple) && ((mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj))->len == 4;
 }
 
-Vec2 blit_obj_to_Vec2(mp_obj_t obj)  {
-    if (mp_obj_is_type(obj, &mp_type_tuple)) {
+mp_obj_t blit_Vec2_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
+    mp_arg_check_num(n_args, n_kw, 0, 2, false);
+
+    auto p = m_new_obj(blit_Vec2);
+    p->base.type = &blit_Vec2_type;
+
+    if(n_args == 0)
+        new(&p->val) Vec2();
+    else if(n_args == 1)
+        new(&p->val) Vec2(blit_obj_to_Vec2(args[0]));
+    else // n_args == 2
+        new(&p->val) Vec2(mp_obj_get_float(args[0]), mp_obj_get_float(args[1]));
+
+    return MP_OBJ_FROM_PTR(p);
+}
+
+Vec2 blit_obj_to_Vec2(mp_obj_t obj) {
+    if (mp_obj_is_type(obj, &blit_Vec2_type)) {
+        // real vec2
+        auto p = (blit_Vec2 *)MP_OBJ_TO_PTR(obj);
+        return p->val;
+    } else if(mp_obj_is_type(obj, &mp_type_tuple)) {
         auto tuple = (mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj);
 
         if(tuple->len == 2) {
@@ -250,14 +276,16 @@ Vec2 blit_obj_to_Vec2(mp_obj_t obj)  {
 }
 
 mp_obj_t blit_obj_from_Vec2(Vec2 v) {
-    mp_obj_t items[]{
-        mp_obj_new_float(v.x),
-        mp_obj_new_float(v.y),
-    };
+    auto pv = m_new_obj(blit_Vec2);
+    pv->base.type = &blit_Vec2_type;
+    pv->val = v;
 
-    return mp_obj_new_tuple(2, items);
+    return MP_OBJ_FROM_PTR(pv);
 }
 
 bool blit_obj_is_Vec2(mp_obj_t obj) {
+    if(mp_obj_is_type(obj, &blit_Vec2_type))
+        return true;
+
     return mp_obj_is_type(obj, &mp_type_tuple) && ((mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj))->len == 2;
 }

@@ -7,6 +7,7 @@
 #include "api/rect.h"
 #include "api/size.h"
 #include "api/surface.h"
+#include "api/vec2.h"
 
 // globals
 STATIC mp_obj_t blit_init(void) {
@@ -38,6 +39,7 @@ STATIC const mp_rom_map_elem_t blit_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_Rect), (mp_obj_t)&blit_Rect_type },
     { MP_ROM_QSTR(MP_QSTR_Size), (mp_obj_t)&blit_Size_type },
     { MP_ROM_QSTR(MP_QSTR_Surface), (mp_obj_t)&blit_Surface_type },
+    { MP_ROM_QSTR(MP_QSTR_Vec2), (mp_obj_t)&blit_Vec2_type },
 
     // functions
     { MP_ROM_QSTR(MP_QSTR_init), MP_ROM_PTR(&blit_init_obj) },

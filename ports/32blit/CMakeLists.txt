@@ -50,6 +50,8 @@ set(MICROPY_SOURCE_PORT
     api/size.cpp
     api/surface.c
     api/surface.cpp
+    api/vec2.c
+    api/vec2.cpp
 )
 
 set(MICROPY_SOURCE_QSTR
@@ -64,6 +66,7 @@ set(MICROPY_SOURCE_QSTR
     ${PROJECT_SOURCE_DIR}/api/size.c
     ${PROJECT_SOURCE_DIR}/api/surface.c
     ${PROJECT_SOURCE_DIR}/api/surface.cpp
+    ${PROJECT_SOURCE_DIR}/api/vec2.c
 )
 
 blit_executable(${MICROPY_TARGET}
