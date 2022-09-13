@@ -91,6 +91,10 @@ Point blit_obj_to_Point(mp_obj_t obj) {
         // real point
         auto p = (blit_Point *)MP_OBJ_TO_PTR(obj);
         return p->val;
+    } else if (mp_obj_is_type(obj, &blit_Vec2_type)) {
+        // Vec2
+        auto p = (blit_Vec2 *)MP_OBJ_TO_PTR(obj);
+        return p->val;
     } else if (mp_obj_is_type(obj, &mp_type_tuple)) {
         auto tuple = (mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj);
 
@@ -118,8 +122,8 @@ mp_obj_t blit_obj_from_Point(Point p) {
 }
 
 bool blit_obj_is_Point(mp_obj_t obj) {
-
-    if(mp_obj_is_type(obj, &blit_Point_type))
+    // Vec2 can be converted to Point in the C++ api
+    if(mp_obj_is_type(obj, &blit_Point_type) || mp_obj_is_type(obj, &blit_Vec2_type))
         return true;
 
     return mp_obj_is_type(obj, &mp_type_tuple) && ((mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj))->len == 2;
