@@ -257,3 +257,7 @@ mp_obj_t blit_obj_from_Vec2(Vec2 v) {
 
     return mp_obj_new_tuple(2, items);
 }
+
+bool blit_obj_is_Vec2(mp_obj_t obj) {
+    return mp_obj_is_type(obj, &mp_type_tuple) && ((mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj))->len == 2;
+}

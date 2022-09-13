@@ -24,3 +24,4 @@ bool blit_obj_is_Rect(mp_obj_t obj);
 
 blit::Vec2 blit_obj_to_Vec2(mp_obj_t obj);
 mp_obj_t blit_obj_from_Vec2(blit::Vec2 v);
+bool blit_obj_is_Vec2(mp_obj_t obj);
