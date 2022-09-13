@@ -17,6 +17,7 @@ bool blit_obj_is_Point(mp_obj_t obj);
 
 blit::Size blit_obj_to_Size(mp_obj_t obj);
 mp_obj_t blit_obj_from_Size(blit::Size s);
+bool blit_obj_is_Size(mp_obj_t obj);
 
 blit::Rect blit_obj_to_Rect(mp_obj_t obj);
 mp_obj_t blit_obj_from_Rect(blit::Rect r);

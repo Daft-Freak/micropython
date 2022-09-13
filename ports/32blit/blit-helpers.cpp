@@ -172,6 +172,14 @@ mp_obj_t blit_obj_from_Size(Size s) {
     return MP_OBJ_FROM_PTR(ps);
 }
 
+bool blit_obj_is_Size(mp_obj_t obj) {
+
+    if(mp_obj_is_type(obj, &blit_Size_type))
+        return true;
+
+    return mp_obj_is_type(obj, &mp_type_tuple) && ((mp_obj_tuple_t *)MP_OBJ_TO_PTR(obj))->len == 2;
+}
+
 mp_obj_t blit_Rect_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
     mp_arg_check_num(n_args, n_kw, 0, 4, false);
 
