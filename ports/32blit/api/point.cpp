@@ -10,14 +10,20 @@ mp_obj_t blit_Point_binary_op(mp_binary_op_t op, mp_obj_t lhs, mp_obj_t rhs) {
         case MP_BINARY_OP_ADD:
         case MP_BINARY_OP_INPLACE_ADD:
         {
-            auto right_side = blit_unwrap_obj_val(rhs, Point);
-            return blit_obj_from_Point(*left_side + *right_side);
+            if(blit_obj_is_Point(rhs)) {
+                Point right_side = blit_obj_to_Point(rhs);
+                return blit_obj_from_Point(*left_side + right_side);
+            }
+            return MP_OBJ_NULL;
         }
         case MP_BINARY_OP_SUBTRACT:
         case MP_BINARY_OP_INPLACE_SUBTRACT:
         {
-            auto right_side = blit_unwrap_obj_val(rhs, Point);
-            return blit_obj_from_Point(*left_side - *right_side);
+            if(blit_obj_is_Point(rhs)) {
+                Point right_side = blit_obj_to_Point(rhs);
+                return blit_obj_from_Point(*left_side - right_side);
+            }
+            return MP_OBJ_NULL;
         }
         case MP_BINARY_OP_MULTIPLY:
         case MP_BINARY_OP_INPLACE_MULTIPLY:
@@ -33,13 +39,19 @@ mp_obj_t blit_Point_binary_op(mp_binary_op_t op, mp_obj_t lhs, mp_obj_t rhs) {
         }
         case MP_BINARY_OP_EQUAL:
         {
-            auto right_side = blit_unwrap_obj_val(rhs, Point);
-            return mp_obj_new_bool(*left_side == *right_side);
+            if(blit_obj_is_Point(rhs)) {
+                Point right_side = blit_obj_to_Point(rhs);
+                return mp_obj_new_bool(*left_side == right_side);
+            }
+            return MP_OBJ_NULL;
         }
         case MP_BINARY_OP_NOT_EQUAL:
         {
-            auto right_side = blit_unwrap_obj_val(rhs, Point);
-            return mp_obj_new_bool(*left_side != *right_side);
+            if(blit_obj_is_Point(rhs)) {
+                Point right_side = blit_obj_to_Point(rhs);
+                return mp_obj_new_bool(*left_side != right_side);
+            }
+            return MP_OBJ_NULL;
         }
 
         default:

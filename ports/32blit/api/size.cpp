@@ -43,13 +43,19 @@ mp_obj_t blit_Size_binary_op(mp_binary_op_t op, mp_obj_t lhs, mp_obj_t rhs) {
         }
         case MP_BINARY_OP_EQUAL:
         {
-            auto right_side = blit_unwrap_obj_val(rhs, Size);
-            return mp_obj_new_bool(*left_side == *right_side);
+            if(blit_obj_is_Size(rhs)) {
+                Size right_side = blit_obj_to_Size(rhs);
+                return mp_obj_new_bool(*left_side == right_side);
+            }
+            return MP_OBJ_NULL;
         }
         case MP_BINARY_OP_NOT_EQUAL:
         {
-            auto right_side = blit_unwrap_obj_val(rhs, Size);
-            return mp_obj_new_bool(*left_side != *right_side);
+            if(blit_obj_is_Size(rhs)) {
+                Size right_side = blit_obj_to_Size(rhs);
+                return mp_obj_new_bool(*left_side != right_side);
+            }
+            return MP_OBJ_NULL;
         }
 
         default:

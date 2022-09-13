@@ -56,14 +56,20 @@ mp_obj_t blit_Vec2_binary_op(mp_binary_op_t op, mp_obj_t lhs, mp_obj_t rhs) {
         case MP_BINARY_OP_ADD:
         case MP_BINARY_OP_INPLACE_ADD:
         {
-            auto right_side = blit_unwrap_obj_val(rhs, Vec2);
-            return blit_obj_from_Vec2(*left_side + *right_side);
+            if(blit_obj_is_Vec2(rhs)) {
+                Vec2 right_side = blit_obj_to_Vec2(rhs);
+                return blit_obj_from_Vec2(*left_side + right_side);
+            }
+            return MP_OBJ_NULL;
         }
         case MP_BINARY_OP_SUBTRACT:
         case MP_BINARY_OP_INPLACE_SUBTRACT:
         {
-            auto right_side = blit_unwrap_obj_val(rhs, Vec2);
-            return blit_obj_from_Vec2(*left_side - *right_side);
+            if(blit_obj_is_Vec2(rhs)) {
+                Vec2 right_side = blit_obj_to_Vec2(rhs);
+                return blit_obj_from_Vec2(*left_side - right_side);
+            }
+            return MP_OBJ_NULL;
         }
         case MP_BINARY_OP_MULTIPLY:
         case MP_BINARY_OP_INPLACE_MULTIPLY:
@@ -73,8 +79,8 @@ mp_obj_t blit_Vec2_binary_op(mp_binary_op_t op, mp_obj_t lhs, mp_obj_t rhs) {
                 return blit_obj_from_Vec2(*left_side * right_side);
             }
             if(blit_obj_is_Vec2(rhs)) {
-                auto right_side = blit_unwrap_obj_val(rhs, Vec2);
-                return blit_obj_from_Vec2(*left_side * *right_side);
+                Vec2 right_side = blit_obj_to_Vec2(rhs);
+                return blit_obj_from_Vec2(*left_side * right_side);
             }
             return MP_OBJ_NULL;
         }
