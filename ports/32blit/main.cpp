@@ -21,6 +21,8 @@ extern "C" {
 // Allocate memory for the MicroPython GC heap.
 static char heap[128 * 1024];
 
+static bool repl_enabled = true;
+
 static void do_mp_init() {
     mp_init();
 
@@ -38,6 +40,19 @@ static void do_mp_init() {
     pyexec_event_repl_init();
 }
 
+static void reset() {
+    gc_sweep_all();
+    mp_deinit();
+
+    do_mp_init();
+    pyexec_event_repl_init();
+
+#ifdef TARGET_32BLIT_HW
+    if(!repl_enabled)
+        blit::api.set_raw_cdc_enabled(true);
+#endif
+}
+
 void init() {
     // Initialise the MicroPython runtime.
     mp_stack_ctrl_init();
@@ -52,9 +67,23 @@ void init() {
 
     do_mp_init();
 
+    // attempt to launch script
+    auto launch_path = blit::get_launch_path();
+    if(launch_path) {
+        pyexec_file_if_exists(launch_path);
+
+        if(MP_STATE_PORT(update_callback_obj) && MP_STATE_PORT(render_callback_obj))
+            repl_enabled = false;
+    }
+
+    // fallback to repl
+    if(repl_enabled) {
+        pyexec_event_repl_init();
+
 #ifdef TARGET_32BLIT_HW
-    blit::api.set_raw_cdc_enabled(true);
+        blit::api.set_raw_cdc_enabled(true);
 #endif
+    }
 }
 
 void update(uint32_t time) {
@@ -73,14 +102,14 @@ void update(uint32_t time) {
         }
     }
 
+    if(!repl_enabled)
+        return;
+
 #ifdef TARGET_32BLIT_HW
     uint8_t b;
     while(blit::api.cdc_read(&b, 1)) {
         if (pyexec_event_repl_process_char(b)) {
-            // reset
-            gc_sweep_all();
-            mp_deinit();
-            do_mp_init();
+            reset();
         }
     }
 
