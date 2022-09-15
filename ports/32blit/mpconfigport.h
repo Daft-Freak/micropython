@@ -18,7 +18,7 @@
 
 // Fine control over Python builtins, classes, modules, etc.
 #define MICROPY_PY_ASYNC_AWAIT                  (0)
-#define MICROPY_PY_IO                           (0)
+#define MICROPY_PY_IO_FILEIO                    (0)
 
 #define MICROPY_PY_SYS_STDFILES                 (0)
 #define MICROPY_PY_UASYNCIO                     (0)
