@@ -12,6 +12,7 @@ mp_obj_t blit_vfs_mount(mp_obj_t self, mp_obj_t readonly, mp_obj_t mkfs);
 mp_obj_t blit_vfs_umount(mp_obj_t self);
 mp_obj_t blit_vfs_open(mp_obj_t self, mp_obj_t path_obj, mp_obj_t mode_obj);
 
+mp_obj_t blit_vfs_getcwd(mp_obj_t self);
 mp_obj_t blit_vfs_stat(mp_obj_t self, mp_obj_t path_obj);
 
 extern const mp_obj_type_t blit_vfs_type;

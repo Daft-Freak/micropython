@@ -6,6 +6,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_3(blit_vfs_mount_obj, blit_vfs_mount);
 STATIC MP_DEFINE_CONST_FUN_OBJ_1(blit_vfs_umount_obj, blit_vfs_umount);
 STATIC MP_DEFINE_CONST_FUN_OBJ_3(blit_vfs_open_obj, blit_vfs_open);
 
+STATIC MP_DEFINE_CONST_FUN_OBJ_1(blit_vfs_getcwd_obj, blit_vfs_getcwd);
 STATIC MP_DEFINE_CONST_FUN_OBJ_2(blit_vfs_stat_obj, blit_vfs_stat);
 
 STATIC const mp_rom_map_elem_t blit_vfs_locals_dict_table[] = {
@@ -13,6 +14,7 @@ STATIC const mp_rom_map_elem_t blit_vfs_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_umount), MP_ROM_PTR(&blit_vfs_umount_obj) },
     { MP_ROM_QSTR(MP_QSTR_open), MP_ROM_PTR(&blit_vfs_open_obj) },
 
+    { MP_ROM_QSTR(MP_QSTR_getcwd), MP_ROM_PTR(&blit_vfs_getcwd_obj) },
     // TODO: mkdir, rename, remove, rmdir
     { MP_ROM_QSTR(MP_QSTR_stat), MP_ROM_PTR(&blit_vfs_stat_obj) },
 };

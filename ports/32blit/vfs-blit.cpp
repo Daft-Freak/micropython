@@ -77,6 +77,10 @@ static mp_obj_t blit_vfs_file_open(const mp_obj_type_t *type, mp_obj_t path_obj,
     return MP_OBJ_FROM_PTR(file);
 }
 
+mp_obj_t blit_vfs_getcwd(mp_obj_t self) {
+    return mp_obj_new_str("/", 1);
+}
+
 mp_obj_t blit_vfs_stat(mp_obj_t self, mp_obj_t path_obj) {
     auto path = mp_obj_str_get_str(path_obj);
 
