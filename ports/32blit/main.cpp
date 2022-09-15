@@ -8,12 +8,15 @@ extern "C" {
 #include "py/mperrno.h"
 #include "py/mphal.h"
 #include "py/stackctrl.h"
+#include "extmod/vfs.h"
 #include "shared/runtime/gchelper.h"
 #include "shared/runtime/pyexec.h"
 }
 
 #include "32blit.hpp"
 #include "engine/api_private.hpp"
+
+#include "vfs-blit.h"
 
 // Allocate memory for the MicroPython GC heap.
 static char heap[128 * 1024];
@@ -23,6 +26,14 @@ static void do_mp_init() {
 
     MP_STATE_PORT(render_callback_obj) = nullptr;
     MP_STATE_PORT(update_callback_obj) = nullptr;
+
+    // mount fs
+    mp_obj_t args[2] = {
+        blit_vfs_type.make_new(&blit_vfs_type, 0, 0, nullptr),
+        MP_OBJ_NEW_QSTR(MP_QSTR__slash_),
+    };
+    mp_vfs_mount(2, args, (mp_map_t *)&mp_const_empty_map);
+    MP_STATE_VM(vfs_cur) = MP_STATE_VM(vfs_mount_table);
 
     pyexec_event_repl_init();
 }

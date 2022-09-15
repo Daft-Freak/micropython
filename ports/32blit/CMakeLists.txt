@@ -36,6 +36,8 @@ set(MICROPY_SOURCE_PORT
     mod32blit.c
     mod32blit.cpp
     blit-helpers.cpp
+    vfs-blit.c
+    vfs-blit.cpp
 
     api/buttonstate.c
     api/buttonstate.cpp
@@ -58,6 +60,7 @@ set(MICROPY_SOURCE_QSTR
     ${MICROPY_SOURCE_PY}
     ${MICROPY_SOURCE_EXTMOD}
     ${PROJECT_SOURCE_DIR}/mod32blit.c
+    ${PROJECT_SOURCE_DIR}/vfs-blit.c
     ${PROJECT_SOURCE_DIR}/api/buttonstate.c
     ${PROJECT_SOURCE_DIR}/api/enums.c
     ${PROJECT_SOURCE_DIR}/api/font.c
