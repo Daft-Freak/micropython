@@ -1,6 +1,7 @@
 extern "C"{
 #include "py/mperrno.h"
 #include "py/stream.h"
+#include "extmod/vfs.h"
 }
 
 #include "vfs-blit.h"
@@ -74,6 +75,34 @@ static mp_obj_t blit_vfs_file_open(const mp_obj_type_t *type, mp_obj_t path_obj,
         mp_raise_OSError(MP_ENOENT);
 
     return MP_OBJ_FROM_PTR(file);
+}
+
+mp_obj_t blit_vfs_stat(mp_obj_t self, mp_obj_t path_obj) {
+    auto path = mp_obj_str_get_str(path_obj);
+
+    // TODO: we don't have a stat API, so all we can do is check if it's a file/dir
+    mp_int_t mode = 0;
+    if (api.directory_exists(path))
+        mode |= MP_S_IFDIR;
+    else if(api.file_exists(path))
+        mode |= MP_S_IFREG;
+    else
+        mp_raise_OSError(MP_ENOENT);
+
+    auto t = (mp_obj_tuple_t *)mp_obj_new_tuple(10, nullptr);
+
+    t->items[0] = MP_OBJ_NEW_SMALL_INT(mode); // st_mode
+    t->items[1] = MP_OBJ_NEW_SMALL_INT(0); // st_ino
+    t->items[2] = MP_OBJ_NEW_SMALL_INT(0); // st_dev
+    t->items[3] = MP_OBJ_NEW_SMALL_INT(0); // st_nlink
+    t->items[4] = MP_OBJ_NEW_SMALL_INT(0); // st_uid
+    t->items[5] = MP_OBJ_NEW_SMALL_INT(0); // st_gid
+    t->items[6] = MP_OBJ_NEW_SMALL_INT(0); // st_size
+    t->items[7] = MP_OBJ_NEW_SMALL_INT(0); // st_atime
+    t->items[8] = MP_OBJ_NEW_SMALL_INT(0); // st_mtime
+    t->items[9] = MP_OBJ_NEW_SMALL_INT(0); // st_ctime
+
+    return MP_OBJ_FROM_PTR(t);
 }
 
 mp_obj_t blit_vfs_open(mp_obj_t self, mp_obj_t path_obj, mp_obj_t mode_obj) {
