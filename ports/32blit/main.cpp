@@ -150,6 +150,17 @@ void render(uint32_t time) {
 
             MP_STATE_PORT(render_callback_obj) = nullptr;
         }
+    } else {
+
+        blit::screen.pen = {0, 0, 0};
+        blit::screen.clear();
+
+        blit::Rect screen_rect({0, 0}, blit::screen.bounds);
+
+        blit::screen.pen = {255, 255, 255};
+
+        blit::screen.text("No script loaded,\ntry the REPL!", blit::minimal_font, screen_rect, true, blit::TextAlign::center_center);
+
     }
 }
 
