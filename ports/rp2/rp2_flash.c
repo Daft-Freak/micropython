@@ -275,6 +275,10 @@ static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(rp2_flash_readblocks_obj, 3, 4, rp2_f
 static mp_obj_t rp2_flash_writeblocks(size_t n_args, const mp_obj_t *args) {
     rp2_flash_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     uint32_t offset = mp_obj_get_int(args[1]) * BLOCK_SIZE_BYTES;
+#ifdef PICO_RP2350
+    // adjust for QMI translation (assuming entire image is offset)
+    offset += (qmi_hw->atrans[0] & QMI_ATRANS1_BASE_BITS) >> QMI_ATRANS1_BASE_LSB << 12;
+#endif
     mp_buffer_info_t bufinfo;
     mp_get_buffer_raise(args[2], &bufinfo, MP_BUFFER_READ);
     if (n_args == 3) {
